@@ -1,4 +1,4 @@
-package postgres_connection
+package connect_db
 
 import (
 	"context"
@@ -6,6 +6,6 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func CreateConnection (ctx context.Context) (*pgx.Conn, error) {
+func Connect(ctx context.Context) (*pgx.Conn,error) {
 	return pgx.Connect(ctx, "postgres://postgres:1985@localhost:5432/postgres")
 }

@@ -1,24 +1,37 @@
 package main
 
 import (
-	"GitandPSQL/postgres_connection"
+	"GitandPSQL/db_sql/connect_db"
+	"GitandPSQL/db_sql/create_table"
 	"context"
 	"fmt"
 )
 
 func main () {
-	ctx := context.Background()
+	ctx := context.Background
 
-	conn, err := postgres_connection.CreateConnection(ctx)
+	// Cоздаем таблицы
+
+	conn, err := connect_db.Connect(ctx())
 	if err != nil {
 		panic(err)
 	}
-
-	if err := postgres_connection.CreateTableOrders(ctx, conn); err != nil {
+	// Таблица кассового чека
+	if err := create_table.CreateTableCashTicket(ctx(), conn); err != nil {
 		panic(err)
 	}
-	
+	// Таблица продуктов
+	if err := create_table.CreateTableProduct(ctx(), conn); err != nil {
+		panic(err)
+	}
+	// Таблица аккаунта пользователя
+	if err := create_table.CreateTableUser(ctx(), conn); err != nil {
+		panic(err)
+	}
 
-	fmt.Println("success!")
+	fmt.Println("succed!")
+
+
+
 
 }
